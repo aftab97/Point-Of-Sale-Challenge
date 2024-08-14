@@ -66,19 +66,22 @@ const AddItems = () => {
     }
   }, []);
 
-  const handleProcessRowUpdate = (newRow: any) => {
-    if (gridApiRef.current) {
-      const updatedRows = Array.from(
-        gridApiRef.current.getRowModels().values()
-      );
-      const updatedData = updatedRows.map((row) =>
-        row.id === newRow.id ? newRow : row
-      );
-      setTableData(updatedData);
-      localStorage.setItem("products", JSON.stringify(updatedData));
-    }
-    return newRow;
-  };
+  const handleProcessRowUpdate = useCallback(
+    (newRow: any) => {
+      if (gridApiRef.current) {
+        const updatedRows = Array.from(
+          gridApiRef.current.getRowModels().values()
+        );
+        const updatedData = updatedRows.map((row) =>
+          row.id === newRow.id ? newRow : row
+        );
+        setTableData(updatedData);
+        localStorage.setItem("products", JSON.stringify(updatedData));
+      }
+      return newRow;
+    },
+    [gridApiRef]
+  );
 
   const handleAddItems = useCallback((tableData: Array<TableData>) => {
     const _total = tableData.reduce((sum, row) => {
@@ -124,4 +127,4 @@ const AddItems = () => {
   );
 };
 
-export default AddItems;
+export default React.memo(AddItems);

@@ -49,4 +49,4 @@ const Cashier = () => {
   );
 };
 
-export default Cashier;
+export default React.memo(Cashier);
